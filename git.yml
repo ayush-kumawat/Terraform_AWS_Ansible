@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+    - name: "Clening up folder"
+      shell: rm -rf /var/www/html/*
+    - name: "Downloading code from Git_Hub"
+      git:
+        repo: https://github.com/ayush-kumawat/s3_data.git
+        dest: /var/www/html
+        force: yes
+    - include_vars: url.yml
+    - replace:
+        path: /var/www/html/index.php
+        regexp: 'cfid'
+        replace: "{{ url }}"
+    - name: Reload service httpd, in all cases
+      service:
+        name: httpd
+        state: reloaded
+

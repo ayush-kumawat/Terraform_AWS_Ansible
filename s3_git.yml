@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: download image for s3 
+      git:
+        repo: "https://github.com/ayush-kumawat/s3_data.git"
+        dest: /git

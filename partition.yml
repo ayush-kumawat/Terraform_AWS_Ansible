@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+  - name: Create a new primary partition
+    parted:
+      device: /dev/xvdh
+      number: 1
+      state: present
+  - name: format ebs
+    filesystem:
+        fstype: ext4
+        dev: /dev/xvdh1
+  - name: mount partition to instance 
+    mount:
+        fstype: ext4
+        src: /dev/xvdh1
+        path: /var/www/html
+        state: mounted
+
+
